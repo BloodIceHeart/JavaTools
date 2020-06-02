@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**	
  * @description webLogic11g解析密码
- * 1、domain路径：E:\\oracle\\Middleware1036\\user_projects\\domains\\7001domain
+ * 1、domain路径：E:\\oracle\\Middleware1036\\user_projects\\domains\\8001domain
  * 2、security\\SerializedSystemIni.dat
  * 3、config\\jdbc\\e59bbde5afbfe58a9fe883bde5ba93-5517-jdbc.xml
  * 4、requires weblogic.jar in the class path
@@ -30,8 +30,8 @@ public class WebLogicDecryptor {
 
     public static void main(String[] args) throws Exception {
         args = new String[2];
-        args[0] = "E:\\oracle\\Middleware1036\\user_projects\\domains\\GPIC-POC";
-        args[1] = args[0] + "\\config\\jdbc\\JDBC_Data_Source-1-3408-jdbc.xml";
+        args[0] = "E:\\oracle\\Middleware1036\\user_projects\\domains\\8001domain";
+        args[1] = args[0] + "\\config\\jdbc\\JDBC_Data_Source-0-3407-jdbc.xml";
         if (args.length < 2) {
             throw new Exception("Usage: [domainDir] [configFile]");
         }
