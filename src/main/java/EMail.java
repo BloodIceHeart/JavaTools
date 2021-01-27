@@ -51,7 +51,7 @@ public class EMail {
 
             Session session = Session.getDefaultInstance(props, new Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("393826310@qq.com", "oxzurrekwmqtcaji");
+                    return new PasswordAuthentication("1@qq.com", "oxzurrekwmqtcaji");
                 }
             });
             session.setDebug(false);
