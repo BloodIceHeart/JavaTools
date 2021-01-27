@@ -1,8 +1,8 @@
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import weblogic.security.internal.SerializedSystemIni;
-import weblogic.security.internal.encryption.ClearOrEncryptedService;
+//import weblogic.security.internal.SerializedSystemIni;
+//import weblogic.security.internal.encryption.ClearOrEncryptedService;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPathConstants;
@@ -26,7 +26,7 @@ public class WebLogicDecryptor {
     //private static final String PREFIX = "{3DES}";
     private static final String PREFIX = "{AES}";
     private static final String XPATH_EXPRESSION = "//node()[starts-with(text(), '"	+ PREFIX + "')] | //@*[starts-with(., '" + PREFIX + "')]";
-    private static ClearOrEncryptedService ces;
+    //private static ClearOrEncryptedService ces;
 
     public static void main(String[] args) throws Exception {
         args = new String[2];
@@ -36,7 +36,7 @@ public class WebLogicDecryptor {
             throw new Exception("Usage: [domainDir] [configFile]");
         }
 
-        ces = new ClearOrEncryptedService(SerializedSystemIni.getEncryptionService(new File(args[0]).getAbsolutePath()));
+        //ces = new ClearOrEncryptedService(SerializedSystemIni.getEncryptionService(new File(args[0]).getAbsolutePath()));
         File file = new File(args[1]);
         if (file.getName().endsWith(".xml")) {
             processXml(file);
@@ -72,6 +72,6 @@ public class WebLogicDecryptor {
     private static void print(Object attributeName, Object encrypted) {
         System.out.println("Node name: " + attributeName);
         System.out.println("Encrypted: " + encrypted);
-        System.out.println("Decrypted: " + ces.decrypt((String) encrypted) + "\n");
+        //System.out.println("Decrypted: " + ces.decrypt((String) encrypted) + "\n");
     }
 }

@@ -14,7 +14,13 @@ import java.io.Reader;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
+ * RabbitMq样例
+ * 
+ * <dependency>
+ *     <groupId>com.rabbitmq</groupId>
+ *     <artifactId>amqp-client</artifactId>
+ *     <version>4.1.0</version>
+ * </dependency>
  */
 public class RabbitMqDemo {
     private volatile static Connection connection;
@@ -67,7 +73,7 @@ public class RabbitMqDemo {
     }
 
     /**
-     *
+     * MQ 消息生产发送
      */
     public static void send(String exchange, String routingKey, long messageId, byte[] bytes) throws Exception {
         Channel channel = null;
@@ -148,6 +154,9 @@ public class RabbitMqDemo {
         }
     }
 
+    /**
+     * MQ 消费者
+     */
     static class ConsumerThread extends Thread {
         //队列名称
         private String QUEUE_NAME = "";
