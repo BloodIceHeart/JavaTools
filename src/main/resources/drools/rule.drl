@@ -1,0 +1,17 @@
+package drools;
+dialect  "mvel"
+
+rule "rule 1"
+    when
+        $a : Applicant( age < 18 ) // 规则
+    then
+        $a.valid = false;
+        System.err.println($a.name + "小于18岁");
+end
+rule "rule 2"
+    when
+        $a : Applicant( age >= 18 ) // 规则
+    then
+        $a.valid = false;
+        System.err.println($a.name + "大于等于18岁");
+end
