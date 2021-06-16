@@ -9,7 +9,10 @@ import java.util.Map;
 public class MapConver {
 
     public static void main(String[] args) {
-
+        List<String> warnList = new ArrayList<>();
+        warnList.add("aaaa");
+        String ddd = "aa" + "aa";
+        System.out.println(warnList.contains(ddd));
     }
 
     /**

@@ -26,9 +26,10 @@ public class RabbitMqDemo {
     private volatile static Connection connection;
 
     public static void main(String[] args) throws Exception {
-        RabbitMqDemo.startConsumer();
+        //RabbitMqDemo.startConsumer();
         //RabbitMqDemo.sendMsg("C:\\Users\\Administrator\\Desktop\\1.txt");
-        //RabbitMqDemo.sendMsg();
+        RabbitMqDemo.sendMsg();
+        System.exit(0);
     }
 
     public static void startConsumer() {
@@ -48,7 +49,7 @@ public class RabbitMqDemo {
                 if (connection == null) {
                     //String ipAddress = "9.23.28.35:5672";
 //                    String ipAddress = "9.23.27.142:5672";
-                    String ipAddress = "boss.iok.la:5672";
+                    String ipAddress = "9.23.28.36:5672";
 //                    String ipAddress = "9.7.22.21:5672";
 //                    String ipAddress = "9.0.9.74:5672";
 //                    String ipAddress = "9.20.134.157:5672";//157 158 159
@@ -57,7 +58,7 @@ public class RabbitMqDemo {
 //                    String username = "clpcadmin";
 //                    String password = "clpcpasswd";
                     String username = "test";
-                    String password = "test";
+                    String password = "cG9saWN5LVJhYmJpdE1R";
 //                    String password = "test#123";
                     ConnectionFactory factory = new ConnectionFactory();
                     factory.setAutomaticRecoveryEnabled(true);
@@ -133,7 +134,7 @@ public class RabbitMqDemo {
 
     public static void sendMsg() throws Exception {
         String exchange = "DEX_PolicyGenerateMessage";
-        String routingKey = "OLD_POLICY_37_MESSAGE_EXCHANGE_DEFAULT_KEY";
+        String routingKey = "OLD_POLICY_44_MESSAGE_EXCHANGE_DEFAULT_KEY";
         long messageId = 1235963881;
         String json = "{\"content\":{" +
                 "\"body\":\"{" +
@@ -142,9 +143,9 @@ public class RabbitMqDemo {
                 "\\\"mainPolicyNo\\\":\\\"\\\"," +
                 "\\\"messageId\\\":\\\"3651265125\\\"," +
                 "\\\"mainProposalNo\\\":\\\"\\\"," +
-                "\\\"policyNo\\\":\\\"805072019371300000001\\\"," +
+                "\\\"policyNo\\\":\\\"805112020440112000031\\\"," +
                 "\\\"policySort\\\":\\\"EM2\\\"," +
-                "\\\"riskCode\\\":\\\"0507\\\"" +
+                "\\\"riskCode\\\":\\\"0511\\\"" +
                 "}\"," +
                 "\"type\":\"Headline\"},\"messageId\":" + messageId + "}";
         System.out.println(json);

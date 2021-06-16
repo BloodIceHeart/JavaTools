@@ -1,16 +1,36 @@
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Test2 {
     public static void main(String[] args) throws Exception {
-        caculte();
-        /*for (int i = 0; i < 200; i++) {
+        BigDecimal up = new BigDecimal("1").add(new BigDecimal("10000").divide(new BigDecimal("100")));
+        BigDecimal down = new BigDecimal("1").add(new BigDecimal("10000").divide(new BigDecimal("100")));
+    }
+    
+    public static void lists() {
+        List<String> list1 = new ArrayList<>();
+        int i = 0;
+        list1.add(i++ + "");
+        list1.add(i++ + "");
+        list1.add(i++ + "");
+        list1.add(i++ + "");
+        list1.add(i++ + "");
+        List<String> list2 = list1.stream().filter(a -> Integer.valueOf(a) > 6).collect(Collectors.toList());
+        System.out.println(list2.size());
+    }
+    
+    public static void test() {
+        for (int i = 0; i < 200; i++) {
             Integer integer1 = i;
             Integer integer2 = i;
             System.out.println(integer1 == integer2);
-        }*/
+        }
     }
 
     public static void caculte() throws Exception {
