@@ -1,16 +1,87 @@
-import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test2 {
     public static void main(String[] args) throws Exception {
-        BigDecimal up = new BigDecimal("1").add(new BigDecimal("10000").divide(new BigDecimal("100")));
-        BigDecimal down = new BigDecimal("1").add(new BigDecimal("10000").divide(new BigDecimal("100")));
+        
+    }
+
+    /**
+     * 测试类
+     * 
+     * @throws Exception
+     */
+    public static void compareClauseTest() throws Exception {
+        String b = "投保人与车主的关系是：*****。";
+        String o = "投保人与车主的关系是：我。";
+        System.out.println(Test2.compareClause(b, o));
+        o = "1投保人与车主的关系是：我。";
+        System.out.println(Test2.compareClause(b, o));
+        o = "投保人与车2主的关系是：我。";
+        System.out.println(Test2.compareClause(b, o));
+        o = "投保人与车主的关系是：3我。";
+        System.out.println(Test2.compareClause(b, o));
+        o = "投保人与车主的关系是：我。4";
+        System.out.println(Test2.compareClause(b, o));
+    }
+    
+    /**
+     * 判断时候字符串是否满足b格式
+     * 
+     * @param b 格式 *****A*****B*****
+     * @param o 字符串
+     * @return 格式是否符合
+     * @throws Exception
+     */
+    public static boolean compareClause(String b, String o) throws Exception {
+        String bs = b.replaceAll("\\*\\*\\*\\*\\*", "*");
+        byte[] be = bs.getBytes();
+        byte[] oe = o.getBytes();
+        int j = 0;
+        int last = 0;
+        for (int i = 0; i < oe.length; i++) {
+            // be下标走到最后
+            if (j == be.length) {
+                // be最后不是* 且 oe比be长，则oe与be不匹配
+                if (be[j - 1] != 42) {
+                    j = -1;
+                }
+                break;
+            } else if (be[j] == 42) {
+                // be下标j字符为*
+                j++;
+                last = j;
+            } else if (oe[i] == be[j]) {
+                // oe下标i字符与be下标j字符相等 则累加
+                j++;
+            } else if (last == 0) {
+                // 第一次匹配 且 be下标j字符不为* 则oe与be不匹配
+                break;
+            } else {
+                // 重置匹配下标
+                j = last;
+            }
+        }
+        return j == be.length;
+    }
+    
+    public static int getInt() {
+        int re = 5;
+        try {
+            return re;
+        } finally {
+            re = 6;
+        }
+    }
+    
+    public static Map<String, String> get() {
+        Map<String, String> re = new HashMap<>();
+        try {
+            return re;
+        } finally {
+            re.put("aa", "dd");
+        }
     }
     
     public static void lists() {

@@ -8,9 +8,9 @@ import java.sql.Statement;
 public class MyJdbcDemo {
     public static void main(String[] args) {
         String sql = "";
-        String url = "jdbc:oracle:thin:@9.7.22.1:1521/bsdev";
-        String user = "quotation_d01";
-        String password = "quotation_d01";
+        String url = "jdbc:oracle:thin:@192.168.31.152:1521/helowin";
+        String user = "kehusuqiu";
+        String password = "kehusuqiu";
         ResultSet rs = null;
         PreparedStatement psmt = null;
         Connection conn = null;
@@ -21,13 +21,15 @@ public class MyJdbcDemo {
             // 一个 Connection 代表一个数据库连接
             conn = DriverManager.getConnection(url, user, password);
             // Statement 里面带有很多方法，比如 executeUpdate 可以实现插入，更新和删除等
-            sql = "select updatedate from plc_main where actualid = ?";
+            sql = "select nickname from account where id in (?,?,?)";
             psmt = conn.prepareStatement(sql);
-            psmt.setInt(1, 7356451);
+            psmt.setString(1, "2");
+            psmt.setString(2, "4");
+            psmt.setString(3, "4");
             rs = psmt.executeQuery();
             while (rs.next()) {// 遍历 user 表中所有数据
-                String name = "" + rs.getTimestamp("updatedate");
-                System.out.println("updatedate：" + name);//
+                String name = "" + rs.getString("nickname");
+                System.out.println("nickname：" + name);//
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ehcache name="max" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd">
+    <!--支持内存和磁盘两种存储-->
+    <diskStore path="java.io.tmpdir"/><!--path表示路径-->
+    <defaultCache
+            maxElementsInMemory="100000"
+            maxElementsOnDisk="10000000"
+            eternal="false"
+            overflowToDisk="true"
+            diskPersistent="false"
+            timeToIdleSeconds="1800"
+            timeToLiveSeconds="0"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+    />
+    <!--diskPersistent 是否在磁盘上实例化，重启jvm后失效-->
+    <!--diskExpiryThreadIntervalSeconds 检测缓存对象的线程，运行的时间间隔-->
+    <cache name="ehcacheDemoKey"
+           eternal="false"
+           overflowToDisk="true"
+           diskPersistent="false"
+           maxElementsInMemory="100000"
+           maxElementsOnDisk="10000000"
+           timeToIdleSeconds="18000"
+           timeToLiveSeconds="36000"
+           memoryStoreEvictionPolicy="LFU" >
+    </cache>
+    <!--maxElementsInMemory最大允许存储10000个元素-->
+    <!--eternal是否为永久，否-->
+    <!--timeToIdleSeconds对象在失效前，闲置的最大时间-->
+    <!--timeToLiveSeconds对象的最大生存时间，从创建开始最大时间，只在eternal为false时生效-->
+    <!--memoryStoreEvictionPolicy内存满后的清空策略，有三种FIFO,LFU,LRU-->
+    <!--FIFO 先进先出
+        LFU 使用次数最少（对象有计数值count）
+        LRU 创建时间最早的清空（对象有时间戳）
+    -->
+</ehcache>
