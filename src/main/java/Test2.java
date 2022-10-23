@@ -1,15 +1,105 @@
+import bsh.Interpreter;
+import bsh.NameSpace;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import elasticsearch.UserDto;
+
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test2 {
-    public static void main(String[] args) throws Exception {
-        
+
+    public static void main(String[] args) {
+        System.out.println(1>>3);
+    }
+
+    public static void getWebBody(String nowHtml) {
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        webClient.getOptions().setActiveXNative(false);// 不启用ActiveX
+        webClient.getOptions().setCssEnabled(true);// 是否启用CSS，因为不需要展现页面，所以不需要启用
+        webClient.getOptions().setUseInsecureSSL(true); // 设置为true，客户机将接受与任何主机的连接，而不管它们是否有有效证书
+        webClient.getOptions().setJavaScriptEnabled(true); // 很重要，启用JS
+        webClient.getOptions().setDownloadImages(true);// 不下载图片
+        webClient.getOptions().setThrowExceptionOnScriptError(false);// 当JS执行出错的时候是否抛出异常，这里选择不需要
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);// 当HTTP的状态非200时是否抛出异常，这里选择不需要
+        webClient.getOptions().setTimeout(15 * 1000); // 等待15s
+        webClient.getOptions().setConnectionTimeToLive(15 * 1000);
+
+        HtmlPage page = null;
+        try {
+            page = webClient.getPage(nowHtml);// 加载网页
+            webClient.waitForBackgroundJavaScript(20 * 1000);// 异步JS执行需要耗时，所以这里线程要阻塞30秒，等待异步JS执行结束
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            webClient.close();
+        }
+        String htmlStr = page.getBody().asXml();
+        System.out.println(htmlStr);
+    }
+
+    public static boolean checkRule(String str) {
+        //System.out.println(Test2.checkRule("if (user.getAge() > 10) { check = true; }"));
+        Interpreter interpreter = new Interpreter();
+        try {
+            UserDto userDto = new UserDto();
+            userDto.setAge(9);
+            interpreter.set("user", userDto);
+            interpreter.eval("Boolean check = false;");
+            NameSpace ns = interpreter.getNameSpace();
+            ns.importPackage("java.math.BigDecimal");
+            ns.importPackage("java.util");
+            ns.importPackage("elasticsearch.UserDto");
+            interpreter.eval(str);
+            Object check = interpreter.get("check");
+            if (check != null) {
+                return Boolean.valueOf(check.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static Date parseYearMothDay(Date date, int hour){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        //取得当天的起始时间
+        calendar.set(Calendar.HOUR_OF_DAY,hour);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    static class ItemKind {
+        private BigDecimal premium;
+
+        public BigDecimal getPremium() {
+            return premium;
+        }
+
+        public void setPremium(BigDecimal premium) {
+            this.premium = premium;
+        }
+    }
+    public static void reduce() throws Exception {
+        List<ItemKind> mergeItemList = new ArrayList<>();
+        mergeItemList.add(new ItemKind());
+        mergeItemList.add(new ItemKind());
+        mergeItemList.add(new ItemKind());
+        mergeItemList.get(0).setPremium(new BigDecimal(5));
+        mergeItemList.get(1).setPremium(new BigDecimal(5));
+        mergeItemList.get(2).setPremium(new BigDecimal(5));
+        System.out.println(mergeItemList.stream().map(ItemKind::getPremium).reduce(BigDecimal::add).orElse(BigDecimal.ZERO));
     }
 
     /**
      * 测试类
-     * 
+     *
      * @throws Exception
      */
     public static void compareClauseTest() throws Exception {
@@ -25,10 +115,10 @@ public class Test2 {
         o = "投保人与车主的关系是：我。4";
         System.out.println(Test2.compareClause(b, o));
     }
-    
+
     /**
      * 判断时候字符串是否满足b格式
-     * 
+     *
      * @param b 格式 *****A*****B*****
      * @param o 字符串
      * @return 格式是否符合
@@ -65,7 +155,7 @@ public class Test2 {
         }
         return j == be.length;
     }
-    
+
     public static int getInt() {
         int re = 5;
         try {
@@ -74,7 +164,7 @@ public class Test2 {
             re = 6;
         }
     }
-    
+
     public static Map<String, String> get() {
         Map<String, String> re = new HashMap<>();
         try {
@@ -83,7 +173,7 @@ public class Test2 {
             re.put("aa", "dd");
         }
     }
-    
+
     public static void lists() {
         List<String> list1 = new ArrayList<>();
         int i = 0;
@@ -95,7 +185,7 @@ public class Test2 {
         List<String> list2 = list1.stream().filter(a -> Integer.valueOf(a) > 6).collect(Collectors.toList());
         System.out.println(list2.size());
     }
-    
+
     public static void test() {
         for (int i = 0; i < 200; i++) {
             Integer integer1 = i;
@@ -122,7 +212,7 @@ public class Test2 {
 
     public static int getDayMinus(Date startDate, int intStartHour, Date endDate, int intEndHour)
             throws Exception {
-        
+
         int intDay = 0;
         java.util.Date startDateJava = new java.util.Date(
                 startDate.getYear(), startDate.getMonth(),
