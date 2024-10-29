@@ -10,13 +10,20 @@
     <packaging>jar</packaging>
     
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>weblogic</groupId>-->
-<!--            <artifactId>weblogic</artifactId>-->
-<!--            <version>10.3.6</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${basedir}/lib/weblogic.jar</systemPath>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>weblogic</groupId>
+            <artifactId>weblogic</artifactId>
+            <version>10.3.6</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/weblogic.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.atlassian-universal-plugin-manager-plugin</groupId>
+            <artifactId>atlassian-universal-plugin-manager-plugin</artifactId>
+            <version>4.0.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/atlassian-universal-plugin-manager-plugin-4.0.1.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
